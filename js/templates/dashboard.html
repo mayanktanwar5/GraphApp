@@ -1,0 +1,204 @@
+<div class="dashboard">
+	<div class=container>
+		<div class="dashboard-header col-md-12 col-lg-12">
+			<div class="col-md-6">
+				<div class="logo"></div>
+			</div>	
+			<div class="col-md-6"><span class="pull-right dashboard-title">Juniper Networks Server Monitor</span></div>
+		</div>
+		<div class="serverInfo col-md-12 text-center">
+			<div class="col-md-6">
+				<button class="btn btn-lg btn-success" data-toggle="modal" data-target="#serverId">Enter ServerID</button>					
+			</div>
+			<div class="col-md-6">
+				<button class="btn btn-lg btn-success" data-toggle="modal" data-target="#submitServer">Submit a Request to Server</button>					
+			</div>
+
+		</div>
+
+		<div id="serverId" class="modal fade" role="dialog">
+		  <div class="modal-dialog">
+		    <div class="modal-content serverId" >
+		    <button type="button" style="color:blue ;padding-right:5px" class="close" data-dismiss="modal">&times;</button>
+		      	<div class="server text-center">
+		      		<form name="idForm" novalidate>
+		      		 <div class ="form-group" ng-class="{ 'has-error' : serverForm.serverName.$invalid && !serverForm.serverName.$pristine }">
+		      			<input type="text" placeholder="Enter the ServerId to monitor" ng-model="serverId" class="form-control serverText" required name="id">
+		      			<span class="red" ng-show="idForm.id.$invalid && !idForm.id.$pristine">Please enter a server name ex Server1</span>
+		      		 </div>
+		      		<br>
+		      		<button ng-disabled="idForm.$invalid" style="width: 150px" ng-click="getServer(serverId)" data-dismiss="modal" class="btn btn-info btn-lg">Enter</button>
+		      		</form>
+		      	</div>
+		    </div>
+		  </div>
+		</div>
+
+		<div id="submitServer" class="modal fade" role="dialog">
+		  <div class="modal-dialog">
+		    <div class="modal-content submitServer" >
+		    <button type="button" style="color:blue ;padding-right:5px" class="close" data-dismiss="modal">&times;</button>
+
+		      
+		      	<div class="formServer ">
+		      	<form name="serverForm" novalidate ng-submit="submit(user)">
+
+		      		<div class="form-group" ng-class="{ 'has-error' : serverForm.serverName.$invalid && !serverForm.serverName.$pristine }">
+					    <label>Server Name</label>
+					    <input type="text" ng-minlength="4" placeholder="Server Name" name="serverName" class="form-control" ng-model="user.serverName" required>
+					    <p ng-show="serverForm.serverName.$error.minlength" class="help-block">Server name is too short, Should be more than 3 character</p>
+					</div>	
+
+					<div class="form-group" ng-class="{ 'has-error' : serverForm.serverId.$invalid && !serverForm.serverId.$pristine }">
+					    <label>Server Id</label>
+					    <input type="number" ng-minlength="5" placeholder="Server Id" name="serverId" class="form-control" ng-model="user.serverId" required>
+					    
+					    <p ng-show="serverForm.serverId.$error.minlength" class="help-block">Server ID is too short, Should be more than 5 digit</p>
+					</div>
+
+					<div class="form-group" ng-class="{ 'has-error' : serverForm.name.$invalid && !serverForm.name.$pristine }">
+					    <label>Name</label>
+					    <input type="text" placeholder="Your Name" name="name" class="form-control" ng-model="user.name" required>
+					    <p ng-show="serverForm.name.$invalid && !serverForm.name.$pristine" class="help-block">You name is required.</p>
+					</div>
+
+					
+					<div class="form-group" ng-class="{ 'has-error' : serverForm.username.$invalid && !serverForm.username.$pristine }">
+					    <label>Username</label>
+					    <input type="text" name="username" placeholder="Username" class="form-control" ng-model="user.username" ng-minlength="3" ng-maxlength="8">
+					    <p ng-show="serverForm.username.$error.minlength" class="help-block">Username is too short.</p>
+					    <p ng-show="serverForm.username.$error.maxlength" class="help-block">Username is too long.</p>
+					</div>
+					    
+					
+					<div class="form-group" ng-class="{ 'has-error' : serverForm.email.$invalid && !serverForm.email.$pristine }">
+					    <label>Email</label>
+					    <input type="email" name="email" placeholder="Email" class="form-control" ng-model="user.email">
+					    <p ng-show="serverForm.email.$invalid && !serverForm.email.$pristine" class="help-block">Enter a valid email.</p>
+					</div>	
+
+
+
+
+		      		<!-- <input type="text" required placeholder="Enter the Server Name " ng-model="user.serverName" class="form-control serverText" name="serverName">
+		      		<input type="number" required placeholder="Enter the ServerId " ng-model="user.serverId" name="serverId">
+		      		<input type="text" placeholder="Enter " required ng-model="user.name" name="name"> -->
+		      		<br>
+		      		<button style="width: 150px"  ng-disabled="serverForm.$invalid" type="submit" ng-click="submit(user)" data-dismiss="modal" class="btn btn-info btn-lg">Enter</button>
+		      	</form>	
+		      	</div>
+		    </div>
+
+		  </div>
+		</div>
+
+		<div ng-show="serverSet" class="currentServer col-md-12 text-center">
+			<h2>Currently showing details of <span class="selcetedServer">{{currentServer}}</span></h2>
+		</div>
+		<div ng-show="serverSet" class="chart-container col-md-12 col-lg-12">
+			<div ng-repeat="chart in allCharts" on-finish-render="start" class=" col-md-6 col-lg-6" >
+				<div class="chart-card col-md-12">
+				<div class=" col-md-12 col-lg-12 ">
+					<div class=chart-header> 
+						<div class="chart-title col-md-6 col-lg-6">
+							<span>{{chart.Title}}</span>
+						</div>
+						<div class="chart-markers col-md-6 col-lg-6">
+							<span class="pull-left">
+								<!-- <input type="radio" ng-value=chart.chartType ng-change="toogleView(chart)" value="Bar"> Bar <input type="radio" ng-model="chart.chartType" ng-change="toogleView(chart)" value="Line"> Line -->
+								<a ng-click="toggleView(chart)" style="font-size:12px;color:#3d5c8e; ">Switch View <span ng-if=chart.chartType=="Bar"><i style="color:#8e3d88;margin-left:5px;" class="fa fa-line-chart" aria-hidden="true"></i></span> <span ng-if=chart.chartType=="Line"><i style="color:#8e3d88 ; margin-left:5px;"class="fa fa-bar-chart" aria-hidden="true"></i></span></a>
+							</span>
+							<span class="pull-right"><a data-toggle="modal" data-target="#modal{{chart.Id}}"><i class="fa fa-cog" aria-hidden="true"></i></a></span>						
+						</div>	
+					</div>		
+				</div>
+				<div class="chart-content">
+					<div id="{{chart.Id}}">
+						
+					</div>
+				</div>
+				</div>
+				  <div id="modal{{chart.Id}}" class="modal fade" role="dialog">
+		              <div class="modal-dialog">
+		                <!-- Modal content-->
+		                <div class="modal-content">
+		                  <div class="modal-header">
+		                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+		                    <h4 class="modal-title">{{chart.Title}}</h4>
+		                  </div>
+		                  <div class="modal-body">
+		                    <div class="edit-Chart col-md-12">
+		                    	<div class="col-md-6">
+		                    		<span class="chart-item">Set Title</span>
+		                    	</div>
+		                    	<div class="col-md-6">
+		                    		<input type="text" class="form-control"  ng-model="chart.Title" name="">
+		                    	</div>
+		                    	<div class="col-md-6">
+		                    		<span class="chart-item">Set X Axis Label</span>
+		                    	</div>
+		                    	<div class="col-md-6">
+		                    		<input type="text" class="form-control" ng-model="chart.xLabel" name="">
+		                    	</div>
+		                    	<div class="col-md-6">
+		                    		<span class="chart-item">Set Y Axis Label</span>
+		                    	</div>
+		                    	<div class="col-md-6">
+		                    		<input type="text" class="form-control" ng-model="chart.yLabel" name="">
+		                    	</div>
+		                    	<div class="col-md-6">
+		                    		<span class="chart-item">Set Marker Color</span>
+		                    	</div>
+		                    	<div class="col-md-6">
+		                    		<input type="color" class="form-control" ng-model="chart.Color" name="">
+		                    	</div>		                    	
+		                    </div>
+		                  </div>
+		                  <div class="modal-footer">
+
+		                    <button style="margin-top: 15px"type="button" class="btn btn-default" ng-click="configChart(chart)" data-dismiss="modal">Save Changes</button>
+		                  </div>
+		                </div>
+
+		              </div>
+                 </div>
+			</div>
+			<div class="chartStats col-md-12">
+				<div class="col-md-4 stat-card">
+					<div class="stat-container">
+						<div class="stat-header col-md-12">
+							<span>Avearge Cpu Usage in Last Hour</span>
+						</div>	
+						<div class="stat-content col-md-12">
+							<div class="col-md-3 stat-icon green"><i class="fa fa-arrow-up" aria-hidden="true"></i></div>
+							<div class="col-md-9 percent green">11%</div>		
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4 stat-card">
+					<div class="stat-container">
+						<div class="stat-header col-md-12">
+							<span>Avearge Error % in Last Hour</span>
+						</div>	
+						<div class="stat-content col-md-12">
+							<div class="col-md-3 stat-icon red"><i class="fa fa-arrow-down" aria-hidden="true"></i></div>
+							<div class="col-md-9 percent red">25%</div>		
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4 stat-card">
+					<div class="stat-container">
+						<div class="stat-header col-md-12">
+							<span>Avearge Memory Utilzation in Last Hour</span>
+						</div>	
+						<div class="stat-content col-md-12">
+							<div class="col-md-3 stat-icon green"><i class="fa fa-arrow-up" aria-hidden="true"></i></div>
+							<div class="col-md-9 percent green">50%</div>		
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>

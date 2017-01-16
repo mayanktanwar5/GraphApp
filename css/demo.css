@@ -1,0 +1,179 @@
+body {
+    margin: 0;
+    padding: 0;
+    background: url("../images/bg_image.jpg") repeat 0 0 #f8f8f8;
+    color: #333;
+    font-size: 14px;
+    font-family: "Helvetica neue",Helvetica,Arial,Sans-serif;
+}
+#mockAPIResponse {
+    background-color: lightgrey;
+    margin: 0;
+    padding-right: 5px;
+}
+
+#mockAPIResponse li {
+    list-style-type: decimal;
+    padding: 5px 0;
+}
+
+#mockAPIResponse li + li {
+    border-top: 1px solid black; 
+}
+.modal-footer
+{
+	padding: 15px;
+    text-align: center;
+    margin-top:none;
+    border-top:none;
+}
+
+.chart-item
+{
+	font-size: 20px:
+	font-weight:bolder; 
+}
+
+.dashboard-header
+{
+	height:80px;
+	padding: 20px;
+}
+.dashboard-title
+{
+	font-size:30px;
+}
+.logo
+{
+	background:url("../images/logo.png") center no-repeat;
+	background-size:cover;
+	height:70px;
+	width:220px;
+}
+.chart-container
+{
+	margin-top:50px;
+}
+.chart-card,.serverInfo
+{
+	border: 1px solid #ccc;
+	box-shadow: 5px 5px 2px #888888;
+	margin-bottom: 20px;
+}
+./*stat-card
+{
+
+	border: 1px solid #ccc;
+	box-shadow: 5px 5px 2px #888888;
+}*/
+.chart-header
+{
+	padding: 10px;
+}
+.chart-title
+{
+	font-size:16px;
+}
+a ,a:hover
+{
+	color:black;
+	cursor: pointer;
+	text-decoration: none;
+}
+.chart-markers
+{
+	font-color:black;
+	font-size:18px;
+}
+.serverInfo
+{
+	margin-top:40px;
+	padding: 30px;
+}
+.serverInfo button
+{
+	border-radius:0;
+	padding: 10px;
+}
+.line {
+  fill: none;
+  stroke-width: 2px;
+}
+.chartStats
+{
+	margin-top: 50px;
+	margin-bottom: 30px;
+}
+.stat-header
+{
+	padding: 15px;
+}
+.stat-content
+{
+	
+	border: 1px solid #ccc;
+	box-shadow: 2px 2px 1px #888888;
+	height: 150px;
+	background-color: #C8C8C8 ;
+}
+
+.stat-icon
+{
+	font-size:60px;
+	line-height: 150px;
+	opacity: 0.6;
+	float: left;
+}
+
+.green
+{
+	color:#4ba056;
+}
+.red
+{
+	color:#ff3333;
+}
+.percent
+{
+	font-size:90px;
+	line-height: 150px;
+	
+}
+
+.serverId
+{
+	background: url("../images/server.jpg") no-repeat center;
+	background-size: cover;
+	height: 500px;
+}
+
+.server
+{
+	margin-top:25%;
+	padding: 50px;
+	position: relative;
+}
+
+.serverText
+{
+	border:none;
+	border-radius: none;
+	border-bottom:2px solid #ccc;
+	height: 50px;
+}
+
+.currentServer
+{
+
+}
+
+.selcetedServer
+{
+	color:#3d79db;
+}
+
+.formServer
+{
+
+	padding:50px;
+}
